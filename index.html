@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pardle Support</title>
+  <meta name="description" content="Pardle support, FAQs, troubleshooting, and contact information." />
+  <meta name="theme-color" content="#3f7f2a" />
+
+  <!-- Optional: use your icon as favicon (keep file in same folder) -->
+  <link rel="icon" type="image/png" href="pardle-icon.png" />
+
+  <style>
+    :root{
+      --bg1:#ffb84a;
+      --bg2:#3b7b2a;
+      --card:rgba(255,255,255,0.14);
+      --card2:rgba(0,0,0,0.12);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.72);
+      --border:rgba(255,255,255,0.18);
+      --tile:#ffffff;
+      --tileText:#1b1b1b;
+      --link:#ffffff;
+      --shadow: 0 18px 50px rgba(0,0,0,0.28);
+      --radius:18px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at 15% 20%, rgba(255,255,255,0.18), transparent 60%),
+        radial-gradient(900px 650px at 85% 75%, rgba(0,0,0,0.18), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      padding: 28px 16px 56px;
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .topbar{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      min-width: 260px;
+    }
+
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius: 14px;
+      overflow:hidden;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.10);
+      flex: 0 0 auto;
+    }
+    .logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .title{
+      line-height:1.1;
+    }
+    .title h1{
+      margin:0;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+    .title p{
+      margin:4px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.12);
+      color: var(--text);
+      text-decoration:none;
+      font-size: 13px;
+      white-space:nowrap;
+    }
+    .pill:hover{ background: rgba(0,0,0,0.18); }
+
+    .hero{
+      margin-top: 18px;
+      padding: 22px 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(0,0,0,0.10));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .hero h2{
+      margin: 0 0 8px;
+      font-size: 24px;
+    }
+    .hero p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .grid{
+      margin-top: 16px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .card{
+      grid-column: span 12;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.10);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 18px;
+    }
+    .card h3{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: 0.2px;
+    }
+    .card p{
+      margin: 0 0 10px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .card ul{
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .tiles{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .tile{
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(0,0,0,0.08);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: var(--tileText);
+      font-weight: 800;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.22);
+      user-select:none;
+    }
+    .tile.small{
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+    }
+
+    .faq details{
+      border-top: 1px solid rgba(255,255,255,0.16);
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+    .faq summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight: 650;
+      color: rgba(255,255,255,0.90);
+    }
+    .faq summary::-webkit-details-marker{ display:none; }
+    .faq .answer{
+      margin-top: 8px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .contactBox{
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .btn{
+      display:inline-block;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.14);
+      color: var(--link);
+      text-decoration:none;
+      font-weight: 650;
+      font-size: 14px;
+    }
+    .btn:hover{ background: rgba(255,255,255,0.18); }
+
+    .footer{
+      margin-top: 18px;
+      text-align:center;
+      color: rgba(255,255,255,0.62);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .footer a{ color: rgba(255,255,255,0.85); }
+
+    @media (min-width: 860px){
+      .card.span6{ grid-column: span 6; }
+      .card.span7{ grid-column: span 7; }
+      .card.span5{ grid-column: span 5; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <img src="pardle-icon.png" alt="Pardle logo" />
+        </div>
+        <div class="title">
+          <h1>Pardle Support</h1>
+          <p>Wordle vibes, golf scoring, and a tiny bit of obsession.</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="pill" href="index.html">Support</a>
+        <a class="pill" href="privacy.html">Privacy</a>
+        <a class="pill" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h2>Need help?</h2>
+      <p>
+        If Pardle is acting weird, a game is not syncing, or you just want to understand scoring,
+        you are in the right place. Check the quick fixes and FAQs below, then reach out if you need a hand.
+      </p>
+
+      <div class="tiles" aria-hidden="true">
+        <div class="tile">P</div>
+        <div class="tile">A</div>
+        <div class="tile">R</div>
+        <div class="tile">D</div>
+        <div class="tile">L</div>
+        <div class="tile">E</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card span6">
+        <h3>Quick fixes</h3>
+        <ul>
+          <li>Force close the app, reopen, and try again.</li>
+          <li>Confirm you have an internet connection (Wi-Fi or cellular).</li>
+          <li>If you joined a shared game, make sure everyone is using the same game code.</li>
+          <li>If something looks stuck, refresh or re-open the game to resync.</li>
+        </ul>
+        <p style="margin-top:10px;">
+          If you are seeing a specific error message, send it to support along with what you tapped right before it happened.
+        </p>
+      </article>
+
+      <article class="card span6">
+        <h3>How Pardle works (in plain English)</h3>
+        <p>
+          Pardle is a golf scorecard with a Wordle-like twist. Each hole is a tiny puzzle of scoring.
+          Enter scores, track totals relative to par, and share a game with friends so everyone stays in sync.
+        </p>
+        <ul>
+          <li>Totals are shown relative to par (even is 0, over par is +, under par is -).</li>
+          <li>Multiplayer games sync live when everyone is online.</li>
+          <li>Notes per hole are optional, but great for bragging rights.</li>
+        </ul>
+      </article>
+
+      <article class="card faq span7">
+        <h3>FAQs</h3>
+
+        <details>
+          <summary>My game is not syncing with my friends. What do I do?</summary>
+          <div class="answer">
+            First, confirm everyone is in the same game using the same game code. Next, make sure everyone has a connection.
+            If it still does not update, force close the app and reopen. If the issue continues, contact support and include the game code.
+          </div>
+        </details>
+
+        <details>
+          <summary>I refreshed and my scores changed. Why?</summary>
+          <div class="answer">
+            In a shared game, the most recent saved values win. If two people are editing the same hole at the same time,
+            the last saved update can overwrite earlier edits. Best move is to coordinate hole-by-hole in multiplayer.
+          </div>
+        </details>
+
+        <details>
+          <summary>How is the total calculated?</summary>
+          <div class="answer">
+            Pardle calculates each hole as (score minus par). Then it sums across holes. Example: a 5 on a par 4 is +1.
+            A 3 on a par 4 is -1. Even par stays 0.
+          </div>
+        </details>
+
+        <details>
+          <summary>Do I need an account?</summary>
+          <div class="answer">
+            No. Pardle is designed to be quick. Some versions may use anonymous authentication in the background to support syncing,
+            but you do not create a username or password.
+          </div>
+        </details>
+
+        <details>
+          <summary>I purchased a course pack, but I do not see it.</summary>
+          <div class="answer">
+            Try restoring purchases (if that option exists in your build), then restart the app. If it still does not show,
+            contact support and include the Apple ID receipt email or transaction date. Do not send your full Apple ID password.
+          </div>
+        </details>
+      </article>
+
+      <article class="card span5" id="contact">
+        <h3>Contact</h3>
+        <p>
+          Email is the fastest way to get help. Include your device model, iOS version, and what you expected to happen versus what happened.
+        </p>
+
+        <div class="contactBox">
+          <!-- Replace with your real support email -->
+          <a class="btn" href="mailto:help@pardle.app?subject=Pardle%20Support%20Request">Email support</a>
+
+          <!-- Optional: point this to your GitHub Issues if you want -->
+          <a class="btn" href="https://github.com/" target="_blank" rel="noopener noreferrer">Report a bug</a>
+        </div>
+
+        <p style="margin-top:10px;">
+          Typical reply time: 1 to 2 business days.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Version info</h3>
+        <p>
+          If you are reaching out, paste this in your email:
+        </p>
+        <ul>
+          <li>App: Pardle</li>
+          <li>Version: (add your version number here)</li>
+          <li>Device: (example: iPhone 15 Pro)</li>
+          <li>iOS: (example: iOS 18.2)</li>
+          <li>Game code: (if multiplayer)</li>
+        </ul>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <a href="privacy.html">Privacy Policy</a>
+        <span> | </span>
+        <a href="index.html">Support</a>
+      </div>
+      <div style="margin-top:6px;">
+        © <span id="y"></span> Pardle. All rights reserved.
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
