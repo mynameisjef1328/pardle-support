@@ -36,10 +36,7 @@
       min-height:100vh;
       font-family:-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color:var(--text);
-      background:
-        radial-gradient(1100px 700px at 15% 20%, rgba(255,255,255,0.18), transparent 60%),
-        radial-gradient(900px 650px at 85% 75%, rgba(0,0,0,0.18), transparent 60%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
+      background: transparent; /* important: gradient is now a fixed layer */
       padding: 28px 16px 56px;
 
       -webkit-font-smoothing: antialiased;
@@ -49,17 +46,28 @@
       position: relative;
     }
 
-    /* Subtle grain overlay */
-    body::before{
-      content:"";
+    /* Fixed background layer (prevents iOS blur seam + keeps gradient smooth) */
+    .bg{
       position: fixed;
       inset: 0;
+      z-index: -2;
       pointer-events: none;
-      opacity: 0.08;
+      background:
+        radial-gradient(1100px 700px at 15% 20%, rgba(255,255,255,0.18), transparent 60%),
+        radial-gradient(900px 650px at 85% 75%, rgba(0,0,0,0.18), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+    }
+
+    /* Subtle grain overlay (kept, but no blend-mode to avoid artifacts) */
+    .grain{
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.07;
       background:
         radial-gradient(circle at 20% 10%, rgba(255,255,255,0.55) 0 1px, transparent 2px) 0 0 / 22px 22px,
         radial-gradient(circle at 80% 40%, rgba(0,0,0,0.55) 0 1px, transparent 2px) 0 0 / 26px 26px;
-      mix-blend-mode: overlay;
     }
 
     .wrap{
@@ -77,9 +85,14 @@
       -webkit-backdrop-filter: blur(var(--blur)) saturate(145%);
       position: relative;
       overflow: hidden;
+
+      /* Helps iOS render this cleanly */
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      will-change: transform;
     }
 
-    /* Sheen goes BEHIND content now */
+    /* Sheen behind content */
     .glass::after{
       content:"";
       position:absolute;
@@ -89,11 +102,10 @@
         radial-gradient(900px 220px at 20% 0%, rgba(255,255,255,0.22), transparent 55%),
         radial-gradient(650px 200px at 85% 12%, rgba(255,255,255,0.10), transparent 55%),
         linear-gradient(180deg, rgba(255,255,255,0.10), transparent 30%);
-      opacity: 0.55;
+      opacity: 0.45;
       z-index: 0;
     }
 
-    /* Ensure content is always above sheen */
     .glass > *{
       position: relative;
       z-index: 1;
@@ -105,7 +117,7 @@
         -webkit-backdrop-filter: none;
         background: rgba(255,255,255,0.12);
       }
-      body::before{ opacity: 0.04; }
+      .grain{ opacity: 0.04; }
     }
 
     .topbar{
@@ -135,6 +147,7 @@
       flex: 0 0 auto;
       position: relative;
       transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
 
     .logo::before{
@@ -292,6 +305,9 @@
 </head>
 
 <body>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
   <div class="wrap">
     <header class="topbar glass">
       <div class="brand">
@@ -416,7 +432,6 @@
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // Set effective date to today by default, feel free to hardcode it
     const d = new Date();
     const mm = String(d.getMonth() + 1).padStart(2, "0");
     const dd = String(d.getDate()).padStart(2, "0");
