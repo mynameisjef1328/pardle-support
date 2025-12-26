@@ -6,8 +6,6 @@
   <title>Pardle Support</title>
   <meta name="description" content="Pardle support, FAQs, troubleshooting, and contact information." />
   <meta name="theme-color" content="#3f7f2a" />
-
-  <!-- Optional: use your icon as favicon (keep file in same folder) -->
   <link rel="icon" type="image/png" href="pardle-icon.png" />
 
   <style>
@@ -20,7 +18,6 @@
       --glassB: rgba(0,0,0,0.14);
       --border: rgba(255,255,255,0.20);
       --borderStrong: rgba(255,255,255,0.28);
-      --innerHighlight: rgba(255,255,255,0.22);
       --shadow: 0 22px 70px rgba(0,0,0,0.34);
       --shadowSoft: 0 12px 30px rgba(0,0,0,0.22);
       --radius: 18px;
@@ -34,7 +31,6 @@
     }
 
     *{ box-sizing:border-box; }
-
     html, body{ height: 100%; }
 
     body{
@@ -42,10 +38,10 @@
       min-height:100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color:var(--text);
-      background:
-        radial-gradient(1100px 700px at 15% 20%, rgba(255,255,255,0.18), transparent 60%),
-        radial-gradient(900px 650px at 85% 75%, rgba(0,0,0,0.18), transparent 60%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
+
+      /* important: gradient is now a fixed layer */
+      background: transparent;
+
       padding: 28px 16px 56px;
 
       -webkit-font-smoothing: antialiased;
@@ -55,17 +51,28 @@
       position: relative;
     }
 
-    /* Subtle grain overlay (very Apple-y, very gentle) */
-    body::before{
-      content:"";
+    /* Fixed background layer (prevents iOS blur seam + keeps gradient smooth) */
+    .bg{
       position: fixed;
       inset: 0;
+      z-index: -2;
       pointer-events: none;
-      opacity: 0.08;
+      background:
+        radial-gradient(1100px 700px at 15% 20%, rgba(255,255,255,0.18), transparent 60%),
+        radial-gradient(900px 650px at 85% 75%, rgba(0,0,0,0.18), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+    }
+
+    /* Subtle grain overlay (no blend-mode to avoid iOS artifacts) */
+    .grain{
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.07;
       background:
         radial-gradient(circle at 20% 10%, rgba(255,255,255,0.55) 0 1px, transparent 2px) 0 0 / 22px 22px,
         radial-gradient(circle at 80% 40%, rgba(0,0,0,0.55) 0 1px, transparent 2px) 0 0 / 26px 26px;
-      mix-blend-mode: overlay;
     }
 
     .wrap{
@@ -83,9 +90,14 @@
       -webkit-backdrop-filter: blur(var(--blur)) saturate(145%);
       position: relative;
       overflow: hidden;
+
+      /* Helps iOS render cleanly */
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      will-change: transform;
     }
 
-    /* Top highlight sheen */
+    /* Sheen behind content (prevents that banding/tint issue) */
     .glass::after{
       content:"";
       position:absolute;
@@ -95,7 +107,13 @@
         radial-gradient(900px 220px at 20% 0%, rgba(255,255,255,0.22), transparent 55%),
         radial-gradient(650px 200px at 85% 12%, rgba(255,255,255,0.10), transparent 55%),
         linear-gradient(180deg, rgba(255,255,255,0.10), transparent 30%);
-      opacity: 0.95;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    .glass > *{
+      position: relative;
+      z-index: 1;
     }
 
     /* Respect reduced transparency */
@@ -105,7 +123,7 @@
         -webkit-backdrop-filter: none;
         background: rgba(255,255,255,0.12);
       }
-      body::before{ opacity: 0.04; }
+      .grain{ opacity: 0.04; }
     }
 
     .topbar{
@@ -135,6 +153,7 @@
       flex: 0 0 auto;
       position: relative;
       transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
 
     .logo::before{
@@ -150,6 +169,7 @@
       background:
         radial-gradient(26px 18px at 26% 18%, rgba(255,255,255,0.28), transparent 70%);
       opacity: 0.95;
+      z-index: 2;
     }
 
     .logo img{
@@ -206,9 +226,7 @@
       transform: translateY(-1px);
     }
 
-    .pill:active{
-      transform: translateY(0);
-    }
+    .pill:active{ transform: translateY(0); }
 
     .pill:focus-visible{
       outline: 2px solid rgba(255,255,255,0.55);
@@ -308,12 +326,6 @@
       opacity: 0.8;
     }
 
-    .tile.small{
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-    }
-
     .faq details{
       border-top: 1px solid rgba(255,255,255,0.16);
       padding-top: 10px;
@@ -393,6 +405,9 @@
 </head>
 
 <body>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
   <div class="wrap">
     <header class="topbar glass">
       <div class="brand">
