@@ -79,6 +79,7 @@
       overflow: hidden;
     }
 
+    /* Sheen goes BEHIND content now */
     .glass::after{
       content:"";
       position:absolute;
@@ -88,7 +89,14 @@
         radial-gradient(900px 220px at 20% 0%, rgba(255,255,255,0.22), transparent 55%),
         radial-gradient(650px 200px at 85% 12%, rgba(255,255,255,0.10), transparent 55%),
         linear-gradient(180deg, rgba(255,255,255,0.10), transparent 30%);
-      opacity: 0.95;
+      opacity: 0.55;
+      z-index: 0;
+    }
+
+    /* Ensure content is always above sheen */
+    .glass > *{
+      position: relative;
+      z-index: 1;
     }
 
     @media (prefers-reduced-transparency: reduce){
@@ -142,6 +150,7 @@
       background:
         radial-gradient(26px 18px at 26% 18%, rgba(255,255,255,0.28), transparent 70%);
       opacity: 0.95;
+      z-index: 2;
     }
 
     .logo img{
@@ -259,8 +268,6 @@
       color: var(--muted);
       font-size: 13px;
       letter-spacing: 0.10px;
-      position: relative;
-      z-index: 1;
     }
 
     .tag{
