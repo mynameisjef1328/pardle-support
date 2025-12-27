@@ -142,42 +142,25 @@
     }
 
     /* Premium logo badge */
-    .logo{
-      width:48px;
-      height:48px;
-      border-radius: 14px;
-      overflow:hidden;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid var(--borderStrong);
-      box-shadow: var(--shadowSoft);
-      flex: 0 0 auto;
-      position: relative;
-      transform: translateZ(0);
-      -webkit-transform: translateZ(0);
-    }
+    .logoBadge{
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.20);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+}
 
-    .logo::before{
-      content:"";
-      position:absolute;
-      inset: 0;
-      pointer-events:none;
-      border-radius: 14px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.28),
-        inset 0 -1px 0 rgba(0,0,0,0.18),
-        inset 0 0 0 1px rgba(255,255,255,0.08);
-      background:
-        radial-gradient(26px 18px at 26% 18%, rgba(255,255,255,0.28), transparent 70%);
-      opacity: 0.95;
-      z-index: 2;
-    }
-
-    .logo img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
+.logoImg{
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fills the box nicely */
+  display: block;
+}
 
     .title{
       line-height: 1.08;
