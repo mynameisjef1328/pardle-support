@@ -36,7 +36,7 @@
       min-height:100vh;
       font-family:-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color:var(--text);
-      background: transparent; /* important: gradient is now a fixed layer */
+      background: transparent; /* gradient is a fixed layer */
       padding: 28px 16px 56px;
 
       -webkit-font-smoothing: antialiased;
@@ -58,7 +58,7 @@
         linear-gradient(135deg, var(--bg1), var(--bg2));
     }
 
-    /* Subtle grain overlay (kept, but no blend-mode to avoid artifacts) */
+    /* Subtle grain overlay (no blend-mode to avoid iOS artifacts) */
     .grain{
       position: fixed;
       inset: 0;
@@ -86,7 +86,7 @@
       position: relative;
       overflow: hidden;
 
-      /* Helps iOS render this cleanly */
+      /* Helps iOS render cleanly */
       transform: translateZ(0);
       -webkit-transform: translateZ(0);
       will-change: transform;
@@ -135,42 +135,26 @@
       min-width: 260px;
     }
 
-    /* Premium logo badge */
-    .logo{
-      width:48px;
-      height:48px;
-      border-radius: 14px;
-      overflow:hidden;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid var(--borderStrong);
-      box-shadow: var(--shadowSoft);
+    /* Same badge style as Support page */
+    .logoBadge{
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.20);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.22);
       flex: 0 0 auto;
-      position: relative;
-      transform: translateZ(0);
-      -webkit-transform: translateZ(0);
     }
 
-    .logo::before{
-      content:"";
-      position:absolute;
-      inset: 0;
-      pointer-events:none;
-      border-radius: 14px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.28),
-        inset 0 -1px 0 rgba(0,0,0,0.18),
-        inset 0 0 0 1px rgba(255,255,255,0.08);
-      background:
-        radial-gradient(26px 18px at 26% 18%, rgba(255,255,255,0.28), transparent 70%);
-      opacity: 0.95;
-      z-index: 2;
-    }
-
-    .logo img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
+    .logoImg{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .title{
@@ -232,7 +216,6 @@
       border-color: rgba(255,255,255,0.30);
     }
 
-    /* Main content card */
     main.card{
       margin-top: 16px;
       padding: 20px 18px;
@@ -311,8 +294,8 @@
   <div class="wrap">
     <header class="topbar glass">
       <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <img src="pardle-icon.png" alt="Pardle logo" />
+        <div class="logoBadge" aria-hidden="true">
+          <img class="logoImg" src="images/pardle-logo2.PNG" alt="Pardle logo" />
         </div>
         <div class="title">
           <h1>Pardle Privacy Policy</h1>
