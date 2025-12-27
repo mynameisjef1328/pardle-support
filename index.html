@@ -6,7 +6,9 @@
   <title>Pardle Support</title>
   <meta name="description" content="Pardle support, FAQs, troubleshooting, and contact information." />
   <meta name="theme-color" content="#3f7f2a" />
-  <img src="images/pardle-logo2.PNG" alt="Pardle logo">
+
+  <!-- Favicon (use whichever you prefer) -->
+  <link rel="icon" type="image/png" href="images/pardle-logo2.png" />
 
   <style>
     :root{
@@ -51,7 +53,7 @@
       position: relative;
     }
 
-    /* Fixed background layer (prevents iOS blur seam + keeps gradient smooth) */
+    /* Fixed background layer (keeps gradient smooth) */
     .bg{
       position: fixed;
       inset: 0;
@@ -63,7 +65,7 @@
         linear-gradient(135deg, var(--bg1), var(--bg2));
     }
 
-    /* Subtle grain overlay (no blend-mode to avoid iOS artifacts) */
+    /* Subtle grain overlay (no blend-mode, avoids iOS artifacts) */
     .grain{
       position: fixed;
       inset: 0;
@@ -91,13 +93,12 @@
       position: relative;
       overflow: hidden;
 
-      /* Helps iOS render cleanly */
       transform: translateZ(0);
       -webkit-transform: translateZ(0);
       will-change: transform;
     }
 
-    /* Sheen behind content (prevents that banding/tint issue) */
+    /* Sheen behind content */
     .glass::after{
       content:"";
       position:absolute;
@@ -116,7 +117,6 @@
       z-index: 1;
     }
 
-    /* Respect reduced transparency */
     @media (prefers-reduced-transparency: reduce){
       .glass{
         backdrop-filter: none;
@@ -141,26 +141,27 @@
       min-width: 260px;
     }
 
-    /* Premium logo badge */
+    /* Logo badge */
     .logoBadge{
-  width: 64px;
-  height: 64px;
-  border-radius: 18px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.20);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.22);
-}
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.20);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+      flex: 0 0 auto;
+    }
 
-.logoImg{
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* fills the box nicely */
-  display: block;
-}
+    .logoImg{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
     .title{
       line-height: 1.08;
@@ -394,9 +395,15 @@
   <div class="wrap">
     <header class="topbar glass">
       <div class="brand">
-        <div class="logoBadge">
-  <img class="logoImg" src="images/pardle-logo2.PNG" alt="Pardle logo">
-</div>
+        <div class="logoBadge" aria-hidden="true">
+          <img
+            class="logoImg"
+            src="images/pardle-logo2.png"
+            alt="Pardle logo"
+            onerror="this.onerror=null;this.src='pardle-icon.png';"
+          />
+        </div>
+
         <div class="title">
           <h1>Pardle Support</h1>
           <p>Wordle vibes, golf scoring, and a tiny bit of obsession.</p>
@@ -493,7 +500,7 @@
           <summary>I purchased a course pack, but I do not see it.</summary>
           <div class="answer">
             Try restoring purchases (if that option exists in your build), then restart the app. If it still does not show,
-            contact support and include the Apple ID receipt email or transaction date. Do not send your full Apple ID password.
+            contact support and include the Apple receipt email or transaction date. Do not send your password.
           </div>
         </details>
       </article>
@@ -505,10 +512,7 @@
         </p>
 
         <div class="contactBox">
-          <!-- Replace with your real support email -->
           <a class="btn" href="mailto:help@pardle.app?subject=Pardle%20Support%20Request">Email support</a>
-
-          <!-- Optional: point this to your GitHub Issues if you want -->
           <a class="btn" href="https://github.com/" target="_blank" rel="noopener noreferrer">Report a bug</a>
         </div>
 
@@ -519,9 +523,7 @@
 
       <article class="card glass">
         <h3>Version info</h3>
-        <p>
-          If you are reaching out, paste this in your email:
-        </p>
+        <p>If you are reaching out, paste this in your email:</p>
         <ul>
           <li>App: Pardle</li>
           <li>Version: (add your version number here)</li>
